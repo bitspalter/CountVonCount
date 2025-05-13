@@ -1,21 +1,21 @@
 <h1 align="center">CountVonCount</h1>
-<h2 align="center">Neural Network Playground (alpha)</h2>
+<h2 align="left">Neural Network Playground (alpha)</h2>
 
-<h3 align="center">Dependencies</h3>
+<h3 align="left">Dependencies</h3>
 
 libgtkmm-3.0-dev
 
-<h3 align="center">Dataset</h3>
+<h3 align="left">Dataset</h3>
 
 go to:  ./src/dataset/cifar_10
 
 execute: cat data_batch_*.bin > data_batch.bin
 
-<h3 align="center">Compile</h3>
+<h3 align="left">Compile</h3>
 
 make
 
-<h3 align="center">Run</h3>
+<h3 align="left">Run</h3>
 
 ./gzahl
 
