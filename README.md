@@ -1,36 +1,33 @@
-# CountVonCount
+<h1 align="center">CountVonCount</h1>
+<h2 align="center">Neural Network Playground (alpha)</h2>
 
-<h1 align="center">Neural Network Playground (alpha)</h1>
-
-Dependencies:
+<h3 align="center">Dependencies</h3>
 
 libgtkmm-3.0-dev
 
-
-Dataset:
+<h3 align="center">Dataset</h3>
 
 go to:  ./src/dataset/cifar_10
 
 execute: cat data_batch_*.bin > data_batch.bin
 
-
-Compile:
+<h3 align="center">Compile</h3>
 
 make
 
-Run:
+<h3 align="center">Run</h3>
 
 ./gzahl
 
 <br />
 
-uml:
+<h3 align="center">uml</h3>
 
 ![alt tag](https://github.com/bitspalter/CountVonCount/blob/main/images/CountVonCount.png "uml")
 
 <br />
 
-Screenshots:
+<h3 align="center">Screenshots</h3>
 
 ![alt tag](https://github.com/bitspalter/CountVonCount/blob/main/images/config.png "config")
 ![alt tag](https://github.com/bitspalter/CountVonCount/blob/main/images/failed.png "failed")
