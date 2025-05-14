@@ -257,10 +257,6 @@ void C_NN_Visual::show_network(){
          case C_NN_LAYER_POOL:
             break;
          case C_NN_LAYER_FC:{
-            // TEST
-            //C_NN_Layer* pPrevLayer = nullptr;
-            //if(n) pPrevLayer = pLayer[n - 1];
-
             off_y = print_fc_kernel(&sSurface.network, (C_FC_Layer*)pLayer[n], C_NN_VISUAL_NETWORK, off_y); 
             break;
          }
@@ -280,9 +276,6 @@ void C_NN_Visual::show_gradient(){
 
    if(!bReady) return;
 
-   //sSurface.gradient.on_timeout(); // TEST
-   //return; // TEST
-
    int offset = show_head(&sSurface.gradient);
 
    //////////////
@@ -301,10 +294,6 @@ void C_NN_Visual::show_gradient(){
          case C_NN_LAYER_POOL: 
             break;
          case C_NN_LAYER_FC:{
-            // TEST
-            //C_NN_Layer* pPrevLayer = nullptr;
-            //if(n) pPrevLayer = pLayer[n - 1];
-
             off_y = print_fc_kernel(&sSurface.gradient, (C_FC_Layer*)pLayer[n], C_NN_VISUAL_GRADIENT, off_y); 
             break;
          }

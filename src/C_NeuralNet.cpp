@@ -143,16 +143,6 @@ int C_NeuralNet::destroy(){
 
    //////////////////////////////////////////////////////
 
-/*    cout << "VNLayer.size():"      << VNLayer.size()      << endl;
-
-   cout << "VConvLayer.size():"   << VConvLayer.size()   << endl;
-   cout << "VPoolLayer.size():"   << VPoolLayer.size()   << endl;
-   cout << "VFCLayer.size():"     << VFCLayer.size()     << endl;
-
-   cout << "VTLayer.size():"      << VTLayer.size()      << endl;
-
-   cout << "VWarmUpLayer.size():" << VWarmUpLayer.size() << endl; */
-   
    return(C_NEURALNET_READY);
 }
 
@@ -287,19 +277,8 @@ void C_NeuralNet::update(){
 
       C_NN_Layer** pLayer = TLayer.data();
 
-      for(size_t n = 0, p = 0; n < TLayer.size(); n++, p++){
-
-         // TEST
-/*          if(p > 1){
-            if(typeid(*pLayer[n]).hash_code() != typeid(C_Conv_Layer).hash_code()){
-               //cout << "n:" << n << " p:" << p << " Abbrechen" << endl;
-               break;
-            }
-         } */
-
+      for(size_t n = 0, p = 0; n < TLayer.size(); n++, p++)
          pLayer[n]->update();
-      }
-         
 
    }else{
 
@@ -354,8 +333,6 @@ int C_NeuralNet::create_conv_layer(S_Conv_Layer* pSConv_Layer,
 
    if(pSConv_Layer == nullptr || pConv_Layer  == nullptr) 
       return(C_NEURALNET_ERROR);
-
-   cout << "C_NeuralNet::create_conv_layer pSConv_Layer->Divisor:" << pSConv_Layer->Divisor << endl;
 
    if(pConv_Layer->create(pSConv_Layer) != C_CONV_LAYER_READY)
       return(C_NEURALNET_ERROR);
@@ -422,8 +399,6 @@ int C_NeuralNet::create_warming_layer(unsigned int position,
    SFC_Layer.activation = 2; // Softmax
          
    ((C_FC_Layer*)pTLayer)->create(&SFC_Layer);
-
-   //pTLayer->dropout = false;
 
    //////////////////////////////////////////////////
 
@@ -546,81 +521,6 @@ int C_NeuralNet::readFile2Config(string sFile, vector <S_NN_Layer>* pVSLayer){
       return(C_NEURALNET_ERROR);  
    }
 
-/* 
-   int cInput  = SPoolLayer3.Output_X * SPoolLayer3.Output_Y * SNeuralNet.kernel3_z;
-   int cOutput = SNeuralNet.fclayer1;
-
-   for(int n = 0; n < cOutput; n++){
-      pLayer1->pBias[n] = CNN_FC6[n][0];
-      for(int w = 0; w < cInput; w++)
-         pLayer1->pWeight[n][w] = CNN_FC6[n][w + 1];
-   } 
-
-   ///////////////////////////////////////////////////////
-   
-   cInput  = SNeuralNet.fclayer1;
-   cOutput = 10;
-      
-   for(int n = 0; n < cOutput; n++){
-      pLayer2->pBias[n] = CNN_FC5[n][0];
-      for(int w = 0; w < cInput; w++)
-         pLayer2->pWeight[n][w] = CNN_FC5[n][w + 1];
-   }
-   
-   //////////////////////////////////////////////////////
-   
-   cout << sizeof(CNN_L1[0]) / sizeof(CNN_L1[0][0]) << endl;
-   
-   int exInL1 = sizeof(CNN_L1[0]) / sizeof(CNN_L1[0][0]);
-   
-   /////////////////
-   
-   cInput  = SNeuralNet.kernel1_x * SNeuralNet.kernel1_y;
-   //cOutput = SNeuralNet.kernel1_z;
-
-   for(int k1 = 0; k1 < SNeuralNet.input_z; k1++){
-      for(int k2 = 0; k2 < SNeuralNet.kernel1_z && k2 < exInL1; k2++){
-         pCLayer1->pBias[k2] = CNN_L1[k1][k2][0];
-         for(int w = 0; w < cInput; w++)
-            pCLayer1->pKernel[k1][k2][w] = CNN_L1[k1][k2][w + 1];
-      }
-   }
-   
-   //////////////////////////////////////////////////////
-   
-   cInput  = SNeuralNet.kernel2_x * SNeuralNet.kernel2_y;
-   //cOutput = SNeuralNet.kernel2_z;
-   
-   cout << sizeof(CNN_L2[0]) / sizeof(CNN_L2[0][0]) << endl;
-   
-   int exInL2 = sizeof(CNN_L2[0]) / sizeof(CNN_L2[0][0]);
-
-   for(int k1 = 0; k1 < SNeuralNet.kernel1_z && k1 < exInL1; k1++){
-      for(int k2 = 0; k2 < SNeuralNet.kernel2_z && k2 < exInL2; k2++){
-         pCLayer2->pBias[k2] = CNN_L2[k1][k2][0];
-         for(int w = 0; w < cInput; w++)
-            pCLayer2->pKernel[k1][k2][w] = CNN_L2[k1][k2][w + 1];
-      }
-   }
-
-   //////////////////////////////////////////////////////
-
-   cInput  = SNeuralNet.kernel3_x * SNeuralNet.kernel3_y;
-   //cOutput = SNeuralNet.kernel3_z;
-
-   cout << sizeof(CNN_L3[0]) / sizeof(CNN_L3[0][0]) << endl;
-
-   int exInL3 = sizeof(CNN_L3[0]) / sizeof(CNN_L3[0][0]);
-
-   for(int k1 = 0; k1 < SNeuralNet.kernel2_z && k1 < exInL2; k1++){
-
-      for(int k2 = 0; k2 < SNeuralNet.kernel3_z && k2 < exInL3; k2++){
-
-         for(int w = 0; w < cInput; w++)
-            pCLayer3->pKernel[k1][k2][w] = CNN_L3[k1][k2][w + 1];
-      }
-   } */
-
    return(C_NEURALNET_READY);
 }
 
@@ -707,192 +607,6 @@ int C_NeuralNet::saveConfig2File(string sName){
       return(C_NEURALNET_ERROR);  
    }
 
-/* 
-   ofstream myfile(psName);
-
-   if(myfile.is_open()){
-
-      myfile << "// S0M4 0.2\n";
-      
-      //myfile << "// CCTRAIN:"     << CCTRAIN  << "\n";
-      //myfile << "// CCTEST:"      << CCTEST   << "\n";
-      
-      myfile << "// ALPHA:"       << SNeuralNet.alpha    << "\n";
-      myfile << "// BETA:"        << SNeuralNet.beta     << "\n";
-      
-      myfile << "// NET_IN_X:"    << SNeuralNet.input_x << "\n";
-      myfile << "// NET_IN_Y:"    << SNeuralNet.input_y << "\n";
-      
-      myfile << "// SLIDE_L1_X:"  << SNeuralNet.slide1_x << "\n";
-      myfile << "// SLIDE_L1_Y:"  << SNeuralNet.slide1_y << "\n";
-      
-      myfile << "// KERNEL_L1_X:" << SNeuralNet.kernel1_x << "\n";
-      myfile << "// KERNEL_L1_Y:" << SNeuralNet.kernel1_y << "\n";
-      myfile << "// KERNEL_L1_Z:" << SNeuralNet.kernel1_z << "\n";
-      
-      myfile << "// SLIDE_L2_X:"  << SNeuralNet.slide2_x << "\n";
-      myfile << "// SLIDE_L2_Y:"  << SNeuralNet.slide2_y << "\n";
-
-      myfile << "// KERNEL_L2_X:" << SNeuralNet.kernel2_x << "\n";
-      myfile << "// KERNEL_L2_Y:" << SNeuralNet.kernel2_y << "\n";
-      myfile << "// KERNEL_L2_Z:" << SNeuralNet.kernel2_z << "\n";
-
-      myfile << "// SLIDE_L3_X:"  << SNeuralNet.slide3_x << "\n";
-      myfile << "// SLIDE_L3_Y:"  << SNeuralNet.slide3_y << "\n";
-
-      myfile << "// KERNEL_L3_X:" << SNeuralNet.kernel3_x << "\n";
-      myfile << "// KERNEL_L3_Y:" << SNeuralNet.kernel3_y << "\n";
-      myfile << "// KERNEL_L3_Z:" << SNeuralNet.kernel3_z << "\n";
-
-      myfile << "// 1.ConvLayer:" << SConv_Layer1.cSPicX << ":" << SConv_Layer1.cSPicY << "\n";
-      myfile << "// 2.ConvLayer:" << SConv_Layer2.cSPicX << ":" << SConv_Layer2.cSPicY << "\n";
-      myfile << "// 3.ConvLayer:" << SConv_Layer3.cSPicX << ":" << SConv_Layer3.cSPicY << "\n";
-
-      myfile << "// 1.PoolLayer:" << SPoolLayer1.Output_X << ":" << SPoolLayer1.Output_Y << "\n";
-      myfile << "// 2.PoolLayer:" << SPoolLayer2.Output_X << ":" << SPoolLayer2.Output_Y << "\n";
-      myfile << "// 3.PoolLayer:" << SPoolLayer3.Output_X << ":" << SPoolLayer3.Output_Y << "\n";
-
-      myfile << "// pLayer1:" << SPoolLayer3.Output_X * SPoolLayer3.Output_Y * SNeuralNet.kernel3_z << " > " << SNeuralNet.fclayer1 << "\n";
-
-      myfile << "// pLayer2:" << SNeuralNet.fclayer1 << " > " << SNeuralNet.fclayer2 << "\n";
-      
-      ///////////////////////////////////////
-      
-      int cInput  = SPoolLayer3.Output_X * SPoolLayer3.Output_Y * SNeuralNet.kernel3_z;
-      int cOutput = SNeuralNet.fclayer1;
-
-      myfile << "const double CNN_FC6[" << cOutput << "][" << (cInput + 1) << "] = {";
-      
-      
-      for(int n = 0; n < cOutput; n++){
-         myfile << "{" << pLayer1->pBias[n] << ", ";
- 
-         for(int w = 0; w < cInput - 1; w++)
-            myfile << pLayer1->pWeight[n][w] << ", ";
-	 
-	     if(n < cOutput - 1)
-	        myfile << pLayer1->pWeight[n][cInput - 1] << "}, " << endl;
-	     else
-	        myfile << pLayer1->pWeight[n][cInput - 1] << "}}; " << endl;
-      }
-      
-      ///////////////////////////////////////
-      
-      cInput  = SNeuralNet.fclayer1;
-      cOutput = 10;
-
-      myfile << "const double CNN_FC5[" << cOutput << "][" << (cInput + 1) << "] = {";
-
-      for(int n = 0; n < cOutput; n++){
-         myfile << "{" << pLayer2->pBias[n] << ", ";
- 
-         for(int w = 0; w < cInput - 1; w++)
-            myfile << pLayer2->pWeight[n][w] << ", ";
-	 
-	     if(n < cOutput - 1)
-	        myfile << pLayer2->pWeight[n][cInput - 1] << "}, " << endl;
-	     else
-	        myfile << pLayer2->pWeight[n][cInput - 1] << "}}; " << endl;
-      }
-      
-      ///////////////////////////////////////
-      
-      cInput  = SNeuralNet.kernel1_x * SNeuralNet.kernel1_y;
-      cOutput = SNeuralNet.kernel1_z;
-      
-      myfile << "const double CNN_L1[" << SNeuralNet.input_z << "][" << cOutput << "][" << (cInput + 1) << "] = {";
-   
-      for(int k1 = 0; k1 < SNeuralNet.input_z; k1++){
-         
-         myfile << "{";
-         
-         for(int k2 = 0; k2 < SNeuralNet.kernel1_z; k2++){
-      
-            myfile << "{" << pCLayer1->pBias[k2] << ", ";
- 
-            for(int w = 0; w < cInput - 1; w++)
-               myfile << pCLayer1->pKernel[k1][k2][w] << ", ";
-	 
-	        if(k2 < SNeuralNet.kernel1_z - 1)
-	           myfile << pCLayer1->pKernel[k1][k2][cInput - 1] << "}, " << endl;
-	        else
-	           myfile << pCLayer1->pKernel[k1][k2][cInput - 1] << "}} ";
-         }
-      
-	     if(k1 < SNeuralNet.input_z - 1)
-	        myfile << ", " << endl;
-	     else
-	        myfile << "};" << endl;
-      
-      }
-      
-      ///////////////////////////////////////
-      
-      cInput  = SNeuralNet.kernel2_x * SNeuralNet.kernel2_y;
-      cOutput = SNeuralNet.kernel2_z;
-      
-      myfile << "const double CNN_L2[" << SNeuralNet.kernel1_z << "][" << cOutput << "][" << (cInput + 1) << "] = {";
-   
-      for(int k1 = 0; k1 < SNeuralNet.kernel1_z; k1++){
-         
-         myfile << "{";
-         
-         for(int k2 = 0; k2 < SNeuralNet.kernel2_z; k2++){
-      
-            myfile << "{" << pCLayer2->pBias[k2] << ", ";
- 
-            for(int w = 0; w < cInput - 1; w++)
-               myfile << pCLayer2->pKernel[k1][k2][w] << ", ";
-
-            if(k2 < SNeuralNet.kernel2_z - 1)
-               myfile << pCLayer2->pKernel[k1][k2][cInput - 1] << "}, " << endl;
-            else
-               myfile << pCLayer2->pKernel[k1][k2][cInput - 1] << "}} ";
-         }
-      
-         if(k1 < SNeuralNet.kernel1_z - 1)
-            myfile << ", " << endl;
-         else
-            myfile << "};" << endl;
-      }
-
-      ///////////////////////////////////////
-
-      cInput  = SNeuralNet.kernel3_x * SNeuralNet.kernel3_y;
-      cOutput = SNeuralNet.kernel3_z;
-
-      myfile << "const double CNN_L3[" << SNeuralNet.kernel2_z << "][" << cOutput << "][" << (cInput + 1) << "] = {";
-
-      for(int k1 = 0; k1 < SNeuralNet.kernel2_z; k1++){
-
-         myfile << "{";
-
-         for(int k2 = 0; k2 < SNeuralNet.kernel3_z; k2++){
-
-            myfile << "{" << pCLayer3->pBias[k2] << ", ";
-
-            for(int w = 0; w < cInput - 1; w++)
-               myfile << pCLayer3->pKernel[k1][k2][w] << ", ";
-
-            if(k2 < SNeuralNet.kernel3_z - 1)
-               myfile << pCLayer3->pKernel[k1][k2][cInput - 1] << "}, " << endl;
-            else
-               myfile << pCLayer3->pKernel[k1][k2][cInput - 1] << "}} ";
-         }
-
-         if(k1 < SNeuralNet.kernel2_z - 1)
-            myfile << ", " << endl;
-         else
-            myfile << "};" << endl;
-      }
-
-      myfile.close();
-
-   }else{
-      cout << "Unable to open file";
-      return(C_NEURALNET_ERROR);  
-   } */
-
    return(C_NEURALNET_READY);
 }
 
@@ -963,12 +677,6 @@ int C_NeuralNet::saveParam2File(string sName){
                
                type = C_NN_LAYER_POOL;
                myfile.write((char*)&type, 4);
-
-               /* 
-               pPLayer = ((C_Pool_Layer*)pLayer[n]);
-               poollayer = pPLayer->get_slayer();
-
-               myfile.write((char*)&poollayer, sizeof(S_Pool_Layer)); */
 
                break;
 
@@ -1056,12 +764,7 @@ int C_NeuralNet::readFile2Param(string sFile){
       }
 
       C_Conv_Layer* pCLayer = nullptr;
-      //C_Pool_Layer* pPLayer = nullptr;
       C_FC_Layer*   pFLayer = nullptr;
-
-      //S_Conv_Layer* pConvLayer = nullptr;
-      //S_Pool_Layer* pPoolLayer = nullptr;
-      //S_FC_Layer*   pFcLayer   = nullptr;
 
       S_NN_Layer SLayer;
 
@@ -1110,28 +813,10 @@ int C_NeuralNet::readFile2Param(string sFile){
 
                if((offset += SizeBias) > cFile) return(C_NEURALNET_ERROR);
 
-/*             pConvLayer = (S_Conv_Layer*)((uint8_t*)pFile + offset);
-
-               if((offset += sizeof(S_Conv_Layer)) > cFile) return(C_NEURALNET_ERROR);
-
-               cout << pConvLayer->Pic.x << ":" << pConvLayer->Pic.y << ":" << pConvLayer->Pic.z << " offset:" << offset << endl;
-
-               SLayer.type  = C_NN_LAYER_CONV;
-               SLayer.layer = *pConvLayer; */
-
                break;
 
             case C_NN_LAYER_POOL:
 
-
-/*                pPoolLayer = (S_Pool_Layer*)((uint8_t*)pFile + offset);
-
-               if((offset += sizeof(S_Pool_Layer)) > cFile) return(C_NEURALNET_ERROR);
-
-               cout << pPoolLayer->Pic.x << ":" << pPoolLayer->Pic.y << ":" << pPoolLayer->Pic.z << " offset:" << offset << endl;
-
-               SLayer.type  = C_NN_LAYER_POOL;
-               SLayer.layer = *pPoolLayer; */
 
                break;
 
@@ -1159,21 +844,11 @@ int C_NeuralNet::readFile2Param(string sFile){
 
                if((offset += SizeBias) > cFile) return(C_NEURALNET_ERROR);
 
-/*                pFcLayer = (S_FC_Layer*)((uint8_t*)pFile + offset);
-
-               if((offset += sizeof(S_FC_Layer)) > cFile) return(C_NEURALNET_ERROR);
-
-               cout << pFcLayer->cInput << ":" << pFcLayer->cOutput << " offset:" << offset << endl;
-
-               SLayer.type  = C_NN_LAYER_FC;
-               SLayer.layer = *pFcLayer; */
-
                cout << "SizeInput:" << SizeInput 
                     << " SizeOutput:" << SizeOutput 
                     << " SizeKernel:" << SizeKernel 
                     << " SizeBias:" << SizeBias
                     << endl;
-
 
                break;
 

@@ -71,7 +71,6 @@
           if(pKernelEx == nullptr || this->pKernel == nullptr)
             return;
             
-          //std::copy(pKernelEx, pKernelEx + TpKernel.get_size(), this->pKernel);
           memcpy(this->pKernel, pKernelEx, TpKernel.get_size());
        }
 

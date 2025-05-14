@@ -78,12 +78,6 @@
 
             this->bReady = true;
 
-/*             cout << "C_Tensor::create()\n" 
-                 << "Size: " << this->size << "\n"
-                 << " x:" << STensor.x 
-                 << " y:" << STensor.y 
-                 << " z:" << STensor.z << "\n"; */
-
             return(C_TENSOR_READY);
         }
 

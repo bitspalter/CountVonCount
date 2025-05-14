@@ -9,19 +9,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 C_FC_Layer::~C_FC_Layer(){
 
-   //cout << "dectructor C_FC_Layer" << endl;
-
-   //if(pWeight == nullptr) return;
-
-   for(unsigned int n = 0; n < SFC_Layer.cOutput; n++){
-      //delete [] this->pGradient[n];
-      //delete [] this->pMomentum[n];
-      //delete [] this->pWeight[n];
-   }
-   
-   //delete [] this->pGradient;
-   //delete [] this->pMomentum;
-   //delete [] this->pWeight;
 }
 //////////////////////////////////////////////////////////////////////////////////
 // [create]
@@ -190,37 +177,4 @@ void C_FC_Layer::update(){
    
    this->mse_last = this->mse;
    this->mse = 0;
-
-   ///////////////////////////////////////////////////////////////
-   // Test Weight Decay
-
-/*    double qsum    = 0;
-   double qsumAll = 0; 
-
-   for(uint nOutput = 0; nOutput < SFC_Layer.cOutput; nOutput++){
-
-      for(uint nInput = 0; nInput < SFC_Layer.cInput; nInput++){
-         uint offset = nOutput * SFC_Layer.cInput + nInput;
-         qsum += pKernel[offset] * pKernel[offset];
-      }
-
-      //cout << "nOutput:" << nOutput << " qsum:" << qsum << endl;
-
-      qsumAll += qsum;
-      qsum = 0;
-   }
-
-   //cout << "qsumAll:" << qsumAll << " " << (qsumAll / (SFC_Layer.cOutput * SFC_Layer.cInput)) / 100 << endl;
-
-   ///////////////////////////////////////////////////////////////
-
-   double wd = (qsumAll / (SFC_Layer.cOutput * SFC_Layer.cInput)) / 100;
-
-   for(uint nOutput = 0; nOutput < SFC_Layer.cOutput; nOutput++){
-
-      for(uint nInput = 0; nInput < SFC_Layer.cInput; nInput++){
-         uint offset = nOutput * SFC_Layer.cInput + nInput;
-         pKernel[offset] < 0 ? pKernel[offset] += wd : pKernel[offset] -= wd;
-      }
-   } */
 }

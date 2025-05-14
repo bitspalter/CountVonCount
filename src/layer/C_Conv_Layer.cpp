@@ -53,8 +53,6 @@ int C_Conv_Layer::create(S_Conv_Layer* pSCNNLayer){
    
    /////////////////////////////////////////////////////
 
-   //cout << "C_Conv_Layer::create pSCNNLayer->Divisor:" << pSCNNLayer->Divisor << endl;
-
    for(uint nPic = 0; nPic < pSCNNLayer->Pic.z; nPic++){
       
       for(uint nKernel = 0; nKernel < pSCNNLayer->Kernel.z; nKernel++){
@@ -69,14 +67,8 @@ int C_Conv_Layer::create(S_Conv_Layer* pSCNNLayer){
                sum += 
                pKernel[nPic * this->vKernel + nKernel * this->cKernel + k] = 
                (-0.5 + (double)rand() / RAND_MAX) / pSCNNLayer->Divisor;
-
-/*                cout << "k sum:" << k << " " 
-                                << pKernel[nPic * this->vKernel + nKernel * this->cKernel + k] 
-                                << " " << pSCNNLayer->Divisor << endl; */
             }
          }while(sum < 0.0 || sum > 0.1);
-
-         //cout << "nPic sum:" << nPic << " " << sum << endl;
 
          this->pBias[nKernel] = sum - 0.05;
       }
